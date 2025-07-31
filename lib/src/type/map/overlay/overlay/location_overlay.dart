@@ -8,14 +8,12 @@ part of "../../../../../flutter_naver_map.dart";
 class NLocationOverlay extends NOverlay<NLocationOverlay> {
   /* ----- Constructor ----- */
 
-  NLocationOverlay._attachToMapWhenFirstUse(_NOverlayController controller)
-      : super(_locationOverlayInfo) {
+  NLocationOverlay._attachToMapWhenFirstUse(_NOverlayController controller) : super(_locationOverlayInfo) {
     _addedOnMap(controller);
     _allSyncByDefaultForPlatformDiffProperties();
   }
 
-  static const NOverlayInfo _locationOverlayInfo =
-      NOverlayInfo(type: NOverlayType.locationOverlay, id: "L");
+  static const NOverlayInfo _locationOverlayInfo = NOverlayInfo(type: NOverlayType.locationOverlay, id: "L");
 
   /* ----- Methods ----- */
 
@@ -37,6 +35,9 @@ class NLocationOverlay extends NOverlay<NLocationOverlay> {
 
   double get circleRadius => _circleRadius;
   double _circleRadius = defaultCircleRadius;
+
+  NOverlayImage get icon => _icon;
+  NOverlayImage _icon = defaultIcon;
 
   Size get iconSize => _iconSize;
   Size _iconSize = autoSize;
@@ -88,7 +89,10 @@ class NLocationOverlay extends NOverlay<NLocationOverlay> {
     _set(_circleRadiusName, circleRadius);
   }
 
-  void setIcon(NOverlayImage icon) => _set(_iconName, icon);
+  void setIcon(NOverlayImage icon) {
+    _icon = icon;
+    _set(_iconName, icon);
+  }
 
   void setIconSize(Size size) {
     _iconSize = size;
@@ -156,11 +160,8 @@ class NLocationOverlay extends NOverlay<NLocationOverlay> {
   static const defaultCircleColor = Color(0x141666F0);
   static const defaultCircleRadius = 18.0;
   static const autoSize = Size(0, 0);
-  static const defaultIcon = NOverlayImage.fromAssetImage(
-      "$_packageIconAssetPath/location_overlay_icon.png");
-  static const defaultSubIcon = NOverlayImage.fromAssetImage(
-      "$_packageIconAssetPath/location_overlay_sub_icon.png");
-  static const faceModeSubIcon = NOverlayImage.fromAssetImage(
-      "$_packageIconAssetPath/location_overlay_sub_icon_face.png");
+  static const defaultIcon = NOverlayImage.fromAssetImage("$_packageIconAssetPath/location_overlay_icon.png");
+  static const defaultSubIcon = NOverlayImage.fromAssetImage("$_packageIconAssetPath/location_overlay_sub_icon.png");
+  static const faceModeSubIcon = NOverlayImage.fromAssetImage("$_packageIconAssetPath/location_overlay_sub_icon_face.png");
   static const _packageIconAssetPath = "packages/flutter_naver_map/assets/icon";
 }
