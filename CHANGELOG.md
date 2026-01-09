@@ -1,3 +1,29 @@
+## 1.4.4
+
+### Change
+- change compass widget tap to reset animation duration to 300ms
+
+
+## 1.4.3
+
+### Add (New Features)
+- [All Platform] Add `NCompassWidget`, `NaverMapOptions.compassEnable`, `NaverMapOptions.compassHideWhenUnrotated`
+- [All Platform] Add New API `NaverMapController.nowCameraPositionStream`
+
+### Fix
+- [All Platform] Fixed an issue where the stored image cache wasn’t being cleared.
+
+### Update
+- [All Platform] Support custom `cacheKey` on `NOverlayImage.fromByteArray`
+- [All Platform] improve accuracy of `NaverMapController.nowCameraPosition`
+
+
+## 1.4.2
+
+### Update
+- [All Platform] **Update Naver Map SDK to 3.23.0**
+
+
 ## 1.4.1+1
 - Fix README.md
 
