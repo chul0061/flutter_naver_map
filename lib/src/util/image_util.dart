@@ -46,15 +46,18 @@ class ImageUtil {
   }
 
   /* ----- TempDir ----- */
-  static Directory? _imageTempDir;
+  /// 완료된 Directory 가 아니라 초기화 Future 를 캐싱한다.
+  /// [saveImage] 가 동시에 호출되면(예: 마커 아이콘 여러 개를 `Future.wait` 로 생성)
+  /// 초기화가 끝나기 전이라 모두 [_initTempDir] 을 각자 실행하게 되는데,
+  /// [_cleanUpPreviousTempDir] 이 형제 폴더를 전부 지우므로 서로가 방금 만든
+  /// 폴더를 삭제해버려 이후 쓰기가 `Cannot open file` 로 실패한다.
+  static Future<Directory>? _imageTempDir;
 
-  static Future<Directory> _getDir() async {
-    if (_imageTempDir case Directory dir) return dir;
-
-    final imageTempDir = await _initTempDir();
-    _imageTempDir = imageTempDir;
-    return imageTempDir;
-  }
+  static Future<Directory> _getDir() =>
+      _imageTempDir ??= _initTempDir().onError((error, stackTrace) {
+        _imageTempDir = null; // 실패한 Future 는 캐싱하지 않는다 — 다음 호출에서 재시도.
+        Error.throwWithStackTrace(error!, stackTrace);
+      });
 
   static Future<Directory> _initTempDir() async {
     final tempDir = await getTemporaryDirectory();
